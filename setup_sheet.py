@@ -59,7 +59,7 @@ def create_sample_sheet():
         dates = []
         for i in range(5, 0, -1):  # Last 5 days
             date = today - timedelta(days=i)
-            dates.append(date.strftime("%-d/%-m/%Y"))
+            dates.append(date.strftime("%d/%m/%Y"))
         
         # Create headers
         headers = ["Roll No"] + dates

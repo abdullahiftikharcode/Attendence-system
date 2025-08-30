@@ -92,7 +92,7 @@ def load_students_from_worksheet(worksheet, selected_date_str=None):
         
         # Use selected date or default to today
         if selected_date_str is None:
-            target_date_str = datetime.now().strftime("%-d/%-m/%Y")  # Format: 29/8/2025
+            target_date_str = datetime.now().strftime("%d/%m/%Y")  # Format: 29/8/2025
         else:
             target_date_str = selected_date_str
         
@@ -187,7 +187,7 @@ def load_students_from_sheet(client, sheet_name, worksheet_name=None, selected_d
         
         # Use selected date or default to today
         if selected_date_str is None:
-            target_date_str = datetime.now().strftime("%-d/%-m/%Y")  # Format: 29/8/2025
+            target_date_str = datetime.now().strftime("%d/%m/%Y")  # Format: 29/8/2025
         else:
             target_date_str = selected_date_str
         
@@ -287,7 +287,7 @@ def main():
     
     # Format selected date for display and processing
     selected_date_str = selected_date.strftime("%B %d, %Y")
-    selected_date_sheet_format = selected_date.strftime("%-d/%-m/%Y")  # Format for sheet headers
+    selected_date_sheet_format = selected_date.strftime("%d/%m/%Y")  # Format for sheet headers
     
     st.subheader(f"📅 Attendance Date: {selected_date_str}")
     
@@ -332,7 +332,7 @@ def main():
                 
                 **Please check:**
                 1. Document name is correct: `{document_name}`
-                2. Document is shared with: `zair-service@inspired-frame-468222-e3.iam.gserviceaccount.com`
+                2. Document is shared with: `mykey-317@inspired-frame-468222-e3.iam.gserviceaccount.com`
                 3. Service account has 'Editor' permissions
                 """)
                 st.stop()
