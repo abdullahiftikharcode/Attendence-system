@@ -20,7 +20,7 @@ st.set_page_config(
 
 # Constants
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
-CREDENTIALS_FILE = 'credentials.json'
+CREDENTIALS_FILE = 'inspired-frame-468222-e3-ca1781f4f058.json'  # Updated filename
 SHEET_NAME = 'SE_ATTENDANCE-FALL_2025'  # This is the Google Sheets document name
 
 # Student data will be loaded from Google Sheets
@@ -30,11 +30,26 @@ STUDENTS = []
 def get_google_sheets_client():
     """Initialize and return Google Sheets client"""
     try:
-        credentials = Credentials.from_service_account_file(
-            CREDENTIALS_FILE, scopes=SCOPES
-        )
-        client = gspread.authorize(credentials)
-        return client
+        # Try to use Streamlit secrets first (for cloud deployment)
+        if hasattr(st, 'secrets') and 'gcp_service_account' in st.secrets:
+            # Create credentials from Streamlit secrets
+            credentials_dict = dict(st.secrets['gcp_service_account'])
+            credentials = Credentials.from_service_account_info(
+                credentials_dict, scopes=SCOPES
+            )
+            client = gspread.authorize(credentials)
+            return client
+        else:
+            # Fall back to local JSON file (for local development)
+            try:
+                credentials = Credentials.from_service_account_file(
+                    CREDENTIALS_FILE, scopes=SCOPES
+                )
+                client = gspread.authorize(credentials)
+                return client
+            except FileNotFoundError:
+                st.error("❌ **Credentials not found!**\n\n**For local development:** Place the JSON credentials file in the same directory.\n\n**For Streamlit Cloud:** Add credentials to the secrets management.")
+                return None
     except Exception as e:
         st.error(f"Error connecting to Google Sheets: {str(e)}")
         return None
